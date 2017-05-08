@@ -12,9 +12,26 @@ package deltriartikkelista;
  */
 public class Jana {
     
-    public Piste a,b;
+    /**
+     * janan alku
+     */
+    public Piste a,
+
+    /**
+     * janan loppu
+     */
+    b;
+
+    /**
+     * janan pituus
+     */
     public float pituus;
     
+    /**
+     * Luodaan jana pisteiden ga ja gb välille
+     * @param ga alku piste
+     * @param gb loppu piste
+     */
     public Jana(Piste ga, Piste gb)
     {
         a = ga;
@@ -22,6 +39,11 @@ public class Jana {
         pituus = (float)Math.sqrt((b.x-a.x)*(b.x-a.x) + (b.y-a.y)*(b.y-a.y));
     }
     
+    /**
+     *Tutkitaan onko tämä jana annetun janan kanssa sama, koordinaattien mielessä
+     * @param other jana johonka verrataan
+     * @return oliko jana sama
+     */
     public boolean compare(Jana other)
     {
         //katostaan onko jana suoraan tämä jana
@@ -31,25 +53,28 @@ public class Jana {
         return other.a == b && other.b == a;
     }
     
-    //tämän ja toisen janan välinen piste tulo
-    public float pisteTulo(Jana other)
+
+    /**
+     *tämän ja toisen janan välinen piste tulo
+     * @param other toinen jana
+     * @return piste tulo
+     */
+        public float pisteTulo(Jana other)
     {
         return (b.x-a.x)*(other.b.x - other.a.x) + (b.y-a.y)*(other.b.y - other.a.y);
     }
     
-    /*
-    //palautetaan tämän janan normalisoitu versio
-    public Jana normalized()
-    {
-        float newx = (b.x-a.x)/pituus + a.x;
-        float newy = (b.y-a.y)/pituus + a.y;
-        Piste p = new Piste(newx ,newy );
-        return new Jana(a,p);
-    }*/
+
     
-    //tämän ja annetun janan risti tulo this x other
-    //HUOM: koska ollaan 2d koordinaatistossa, on kyseinen vektori pystyssä, joten sitä ei voi järkevästi esittää jana oliolla. Palautetaan siis vain sen magnituudi.
-    public float ristiTulo(Jana other)
+    
+
+    /**
+     *tämän ja annetun janan risti tulo this x other
+     *HUOM: koska ollaan 2d koordinaatistossa, on kyseinen vektori pystyssä, joten sitä ei voi järkevästi esittää jana oliolla. Palautetaan siis vain sen magnituudi.
+     * @param other toinen jana
+     * @return ristitulo vektorin pituus.
+     */
+        public float ristiTulo(Jana other)
     {
         float u1 = b.x - a.x;
         float u2 = b.y - a.y;

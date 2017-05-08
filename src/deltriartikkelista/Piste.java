@@ -15,23 +15,44 @@ import java.util.ArrayList;
 public class Piste {
     
     float x,y,id;
+
+    /**
+     *Kaikki janat jossa tämä piste on osallisena
+     */
     public ArrayList<Jana> linkit = new ArrayList<>();
     
+    /**
+     *Luodaan piste annettuun koordinaattiin
+     * @param gx pisteen x-koordinaatti
+     * @param gy pisteen y-koordinaatti
+     */
     public Piste(float gx, float gy)
     {
         x= gx; y = gy;
         id = Float.NaN;
     }
     
+    /**
+     *Luodaan piste annettuun koordinaattiin annetulla id:llä
+     * @param gx pisteen x-koordinaatti
+     * @param gy pisteen y-koordinaatti
+     * @param gid pisteen id
+     */
     public Piste(float gx, float gy, float gid)
     {
         x= gx; y = gy;
         id = gid;
     }
     
-    //luodaan linkki tämän ja toisen pisteen välille
-    //palautetaan null jos jana on jo olemassa
-    public Jana makeLinkki(Piste otherP)
+    //
+
+    /**
+     * luodaan linkki tämän ja toisen pisteen välille
+     * palautetaan null jos jana on jo olemassa
+     * @param otherP toinen piste
+     * @return muodostettu jana. Null jos jana oli jo olemassa
+     */
+        public Jana makeLinkki(Piste otherP)
     {
         Jana newJana = new Jana(this,otherP);
         //tarkistetaan onko linkki jo olemassa
@@ -48,40 +69,33 @@ public class Piste {
         return newJana;
     }
     
-    //lisätään uusi jana linkiksi. Ei tarkisteta onko se jo olemassa koska oletus on että tätä kutsutaan vain makeLinkki jälkeen
-    //tarkistuksen lisäys sinäänsä ei ole hankala, mutta olisi turhaan aikaa vievää. Toisn aikavaativuus ei kasvaisi kuin vakio kertoimen verran.
-    public void addLinkki(Jana given)
+    //
+
+    /**
+     * lisätään uusi jana linkiksi. Ei tarkisteta onko se jo olemassa koska oletus on että tätä kutsutaan vain makeLinkki jälkeen
+     * tarkistuksen lisäys sinäänsä ei ole hankala, mutta olisi turhaan aikaa vievää. Toisn aikavaativuus ei kasvaisi kuin vakio kertoimen verran.
+     * @param given luotu linkki
+     */
+        public void addLinkki(Jana given)
     {
         linkit.add(given);
     }
-    
-    /*
-    public Jana unlink(Piste o)
-    {
-        Jana proto = new Jana(this,o);
-        Jana pal = null;
-        for(int i = 0; i < linkit.size(); i++)
-        {
-            if(!linkit.get(i).compare(proto))continue;
-            pal = linkit.remove(i);
-            o.removeLinkki(pal);
-            break;
-        }
-        return pal;
-    }
-    
-    public void removeLinkki(Jana j)
-    {
-        linkit.remove(j);
-    }
-    */
-    
+
+    /**
+     *Siirretään pistettä. Visualisointia varten. Mahdollisia janojen pituuksia ei päivitetä
+     * @param xa x mutos
+     * @param ya y muutos
+     */
     public void shift(int xa, int ya)
     {
         x += xa;
         y += ya;
     }
     
+    /**
+     *siirretään pistettä kertoimen avulla
+     * @param kerroin
+     */
     public void scale(float kerroin)
     {
         x = x*kerroin;
@@ -94,26 +108,44 @@ public class Piste {
         return "Piste " + x + "," + y;
     }
     
+    /**
+     *Palauttaa kopion pisteestä. ID ei kopioidu
+     * @return
+     */
     public Piste copy()
     {
         return new Piste(x,y);
     }
     
+    /**
+     * Verrataan annettua pistettä tähän
+     * @param o toinen piste
+     * @return oliko annettu piste samassa koordinaatissa
+     */
     public boolean equals(Piste o)
     {
         return o.x == x && o.y == y;
     }
     
-    //true jos annettu piste on järjestyksessä tämän jälkeen
-    public boolean compare(Piste o)
+
+    /**
+     * Katsotaan onko piste järjestyksessä tämän jälkeen
+     * @param o verrattava piste
+     * @return true jos annettu piste on järjestyksessä tämän jälkeen
+     */
+        public boolean compare(Piste o)
     {
         if(o.x<x) return false;
         if(o.x == x && o.y < y) return false;
         return true;
     }
     
-    //etsitään kolmiot jossa tämä piste on kanta (arvoltaan pienin piste)
-    public ArrayList<Piste[]> getKolmiot()
+
+    /**
+     * etsitään kolmiot jossa tämä piste on kanta (arvoltaan pienin piste)
+     * @return kaikki kolmiot jossa tämä piste on kantana
+     */
+        public ArrayList<Piste[]> getKolmiot()
     {
         ArrayList<Piste[]> pal = new ArrayList<>();
         for(Jana j: linkit)

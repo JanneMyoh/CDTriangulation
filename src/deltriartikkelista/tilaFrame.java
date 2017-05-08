@@ -9,7 +9,7 @@ package deltriartikkelista;
 import java.util.ArrayList;
 
 /**
- *
+ * Olio joka tallentaa algoritmin tilan. Tämän avulla voidaan esittää visualizerilla algoritmin tila eri pisteissä
  * @author janne
  */
 public class tilaFrame {
@@ -18,6 +18,10 @@ public class tilaFrame {
     private ArrayList<Jana> nonD = new ArrayList<Jana>();
     private ArrayList<Jana> D = new ArrayList<Jana>();
     private ArrayList<Piste> sisaPisteet = new ArrayList<Piste>();
+
+    /**
+     *
+     */
     public ArrayList<Piste[]> kolmiot = new ArrayList<Piste[]>();
     private Jana kohde = null;
     
@@ -25,6 +29,14 @@ public class tilaFrame {
     
     private Piste valittu = null;
     
+    /**
+     *Konstruktori
+     * @param gkaikkiP kaikki pisteet
+     * @param gnd non delanay janat.
+     * @param gd delanay janat
+     * @param gsPisteet sisä pisteet
+     * @param gkohde jana jonka suhteen ollaan luomassa kolmiota
+     */
     public tilaFrame(ArrayList<Piste> gkaikkiP, ArrayList<Jana> gnd,ArrayList<Jana> gd , ArrayList<Piste> gsPisteet, Jana gkohde)
     {
         //kopioidaan kaikki pisteet
@@ -66,6 +78,10 @@ public class tilaFrame {
         }
     }
     
+    /**
+     *kerrotaan ehdokas pisteet
+     * @param gEhdo ehdokas pisteet
+     */
     public void addEhdokkaat(ArrayList<Piste> gEhdo)
     {
         for(Piste p: gEhdo)
@@ -79,6 +95,10 @@ public class tilaFrame {
         }
     }
     
+    /**
+     * kerrotaan valittu piste
+     * @param p valittu piste
+     */
     public void addValittu(Piste p)
     {
         if(p == null) return;
@@ -90,6 +110,10 @@ public class tilaFrame {
             }
     }
     
+    /**
+     * skaalataan kaikkia pisteitä
+     * @param sf skaalaus kerroin
+     */
     public void scale(float sf)
     {
         for(Piste p: kaikkiPisteet)
@@ -98,21 +122,37 @@ public class tilaFrame {
         }
     }
     
+    /**
+     * annetaan kaikki pisteet
+     * @return
+     */
     public ArrayList<Piste> getBase()
     {
         return kaikkiPisteet;
     }
     
+    /**
+     *
+     * @return
+     */
     public ArrayList<Jana> getND()
     {
         return nonD;
     }
     
+    /**
+     *
+     * @return
+     */
     public ArrayList<Jana> getD()
     {
         return D;
     }
     
+    /**
+     * Annetaan generation frontin janat
+     * @return
+     */
     public ArrayList<Piste> getReuna()
     {
         ArrayList<Piste> pal = new ArrayList<>();
@@ -128,21 +168,37 @@ public class tilaFrame {
         return pal;
     }
     
+    /**
+     *
+     * @return
+     */
     public ArrayList<Piste> getSisa()
     {
         return sisaPisteet;
     }
     
+    /**
+     *
+     * @return
+     */
     public ArrayList<Piste> getEhdokas()
     {
         return ehdokkaat;
     }
     
+    /**
+     *
+     * @return
+     */
     public Jana getKohde()
     {
         return kohde;
     }
     
+    /**
+     *
+     * @return
+     */
     public Piste getValittu()
     {
         return valittu;

@@ -8,7 +8,6 @@ package deltriartikkelista;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -31,54 +30,13 @@ public class DelTriArtikkelista {
     static float highestId = Float.MIN_VALUE;
 
     /**
+     * Itse ohjelma. Lukee alueen tiedostosta, kolmioi sen ja tulostaa tiedostoon.
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         
         parseFile("testi.txt");
-        /*
-        //seuraavat kaksi askelta tulee tehdä manuaalisesti/jollakin muulla ohjelmalla
-        //Luodaan alku pisteet, neliö näin aluksi
-        //tällehän ei sitten atm kehity sisäpisteitä, koska avg janan pituus on koko homman korkeus. Solution, kierretään sitä hieman?
-        reunaPisteet.add(new Piste(-10, 10));
-        reunaPisteet.add(new Piste(-10, 5));
-        reunaPisteet.add(new Piste(-10, 0));
-        reunaPisteet.add(new Piste(-10, -5));
-        reunaPisteet.add(new Piste(-5, -10));
-        reunaPisteet.add(new Piste(0, -10));
-        reunaPisteet.add(new Piste(5, -15));
-        reunaPisteet.add(new Piste(10, -10));
-        reunaPisteet.add(new Piste(15, -5));
-        reunaPisteet.add(new Piste(15, 0));
-        reunaPisteet.add(new Piste(15, 5));
-        reunaPisteet.add(new Piste(15, 10));
-        reunaPisteet.add(new Piste(10, 10));
-        reunaPisteet.add(new Piste(5, 10));
-        reunaPisteet.add(new Piste(5, 15));
-        reunaPisteet.add(new Piste(0, 15));
-        reunaPisteet.add(new Piste(-5, 15));
-        reunaPisteet.add(new Piste(-5, 10));
         
-        
-        
-               
-        //linkitetään nämä yhteen.
-        for(int i = 0; i < reunaPisteet.size(); i++)
-        {
-            nonDJanat.add(reunaPisteet.get(i).makeLinkki(reunaPisteet.get((i+1)%reunaPisteet.size())));
-        }
-        
-        //luodaan sisään laatikko
-        reunaPisteet.add(new Piste(5, 0));
-        reunaPisteet.add(new Piste(5, 5));
-        reunaPisteet.add(new Piste(10, 5));
-        reunaPisteet.add(new Piste(10, 0));
-        
-        nonDJanat.add(reunaPisteet.get(reunaPisteet.size()-4).makeLinkki(reunaPisteet.get(reunaPisteet.size()-3)));
-        nonDJanat.add(reunaPisteet.get(reunaPisteet.size()-3).makeLinkki(reunaPisteet.get(reunaPisteet.size()-2)));
-        nonDJanat.add(reunaPisteet.get(reunaPisteet.size()-2).makeLinkki(reunaPisteet.get(reunaPisteet.size()-1)));
-        nonDJanat.add(reunaPisteet.get(reunaPisteet.size()-1).makeLinkki(reunaPisteet.get(reunaPisteet.size()-4)));
-        */
         //Itse algoritmi alkaa tästä
         //lasketaan maxy, miny ja keskiverto janan pituus
         float maxy = Float.MIN_VALUE;
@@ -138,7 +96,6 @@ public class DelTriArtikkelista {
             vPos += avg;
         }
         //ollaan saatu luotua sisä pisteet. Aloitetaan kolmiointi
-        //Tehdään kolmionti vain yhdelle janalle
         //etsitään ehdokas pisteet
         System.out.println("Aloitetaan kolmiointi");
         
@@ -328,6 +285,12 @@ public class DelTriArtikkelista {
         
     }
     
+    /**
+     *Poistetaan annettu jana generation frontista
+     * @param nd generation frontin non-delanay janat
+     * @param d generation frontin delanay janat
+     * @param poistettava poistettava jana
+     */
     public static void removeFromFront(ArrayList<Jana> nd, ArrayList<Jana> d, Jana poistettava)
     {
         for(Jana j: nd)
@@ -340,6 +303,12 @@ public class DelTriArtikkelista {
         }
     }
     
+    /**
+     *Etsii pirheen jonka kanssa muodostuu paras kolmio annetulla janalla
+     * @param ehdokkaat kaikki ehdokas pisteet
+     * @param kohde jana jonka suhteen etsitään pistettä
+     * @return valittu piste
+     */
     public static Piste getBestEhdokas(ArrayList<Piste> ehdokkaat, Jana kohde)
     {
         float rad = Float.MAX_VALUE;
@@ -355,6 +324,13 @@ public class DelTriArtikkelista {
         return pal;
     }
     
+    /**
+     * Laskee circumcirclen keskikohdan
+     * @param j1 kolmion kylki 1
+     * @param j2 kolmion kylki 2
+     * @param j3 kolmion kylki 3
+     * @return ympyrän keksipisteen koordinaatit
+     */
     public static float[] calculateCCent(Jana j1, Jana j2, Jana j3)
     {
         //kaava: https://en.wikipedia.org/wiki/Circumscribed_circle
@@ -373,6 +349,13 @@ public class DelTriArtikkelista {
         return new float[]{x,y};
     }
     
+    /**
+     *Etsii sisä ja generation front pisteistä ne jotka ovat valideja pisteitä muodostamaan kolmion annetun janan kanssa
+     * @param pisteet kaikki sisä ja GF pisteet
+     * @param nonDjanat kaikki GF non delanay janat
+     * @param kohde jana jonka suhteen kolmio muodostetaan
+     * @return ne pisteet joiden kanssa voidaan muodostaa kolmio
+     */
     public static ArrayList<Piste> getEhdokkaat(ArrayList<Piste> pisteet, ArrayList<Jana> nonDjanat, Jana kohde)
     {
         ArrayList<Piste> pal = new ArrayList<>();
@@ -402,8 +385,15 @@ public class DelTriArtikkelista {
         return pal;
     }
     
-    //huom tämä on säteen neliö!
-    public static float calculateCRad(Jana s1, Jana s2,Jana s3)
+
+    /**
+     * Laskee annetun kolmion circumcirclen säteen neliön
+     * @param s1 kolmion kylki 1
+     * @param s2 kolmion kylki 2
+     * @param s3 kolmion kylki 3
+     * @return ympyrän säteen neliö
+     */
+        public static float calculateCRad(Jana s1, Jana s2,Jana s3)
     {
 
         return  (s1.pituus*s2.pituus*s3.pituus*s1.pituus*s2.pituus*s3.pituus)/(
@@ -415,8 +405,16 @@ public class DelTriArtikkelista {
     
     }
     
-    //http://stackoverflow.com/questions/563198/how-do-you-detect-where-two-line-segments-intersect
-    public static boolean leikkaa(Jana p, Jana q)
+    //
+
+    /**
+     * Tutkii leikkaako annetut janat. Perustuu alla olevaan linkkiin
+     * http://stackoverflow.com/questions/563198/how-do-you-detect-where-two-line-segments-intersect
+     * @param p tutkittava jana
+     * @param q tutkittava jana
+     * @return leikkaavatko janat
+     */
+        public static boolean leikkaa(Jana p, Jana q)
     {
         float rxs = p.ristiTulo(q);
         float qpxr = new Jana(p.a, q.a).ristiTulo(p);
@@ -427,7 +425,6 @@ public class DelTriArtikkelista {
             //colinear
             float t = (q.a.x - p.a.x)/(p.b.x-p.a.x);
             float u = (q.b.x - p.a.x)/(p.b.x-p.a.x);
-            System.out.println("t:" + t + " u:" + u);
             //jos arvo on NaN, käytetään y muutosta, siltä varalta että vektorilla ei ole x muutosta
             //Tässä kohtaa kikkaillaan koska IEEE-754 starndardi, x == NaN -> false, paitsi jos x = NaN
             if(t != t) {t = (q.a.y - p.a.y)/(p.b.y-p.a.y);System.out.println("saatiin kiinni");}
@@ -435,7 +432,6 @@ public class DelTriArtikkelista {
             //jos vieläkin NaN asetetaan nollaksi... alku tai loppu piste on toisen janan alku tai loppu. Ei välttämättä leikkausta
             if(t != t) t = 0;
             if(u != u) u = 0;
-            System.out.println("final t:" + t + " u:" + u);
             if(t <= 0 && u <= 0) return false;
             else if(t>0 && u>0 && Math.abs(t)>=1&&Math.abs(u)>=1) return false;
             return true;
@@ -447,6 +443,13 @@ public class DelTriArtikkelista {
         return false;
     }
     
+    /**
+     *Tutkitaan onko ehdotettu piste sallittu sisäpiste
+     * @param p ehdokas piste
+     * @param janat kaikki janat
+     * @param amin minimi alpha arvo joka hyväksytään
+     * @return onko piste sallittu sisä piste
+     */
     public static boolean validInner(Piste p, ArrayList<Jana> janat, float amin)
     {
         //etsitään jana joka on lähinnä annettua pistettä

@@ -28,6 +28,7 @@ public class delVisualizer extends javax.swing.JFrame {
     
     /**
      * Creates new form delVisualizer
+     * @param pisteet
      */
     public delVisualizer(ArrayList<tilaFrame> pisteet) {
         System.out.println("Luodaan visualizer");
@@ -52,10 +53,7 @@ public class delVisualizer extends javax.swing.JFrame {
     
     private void draw(Graphics g, int wid, int hei)
     {
-        //skaalataan pisteet niin että maksimi ja minimi ovat melkein reunoilla
-        //float kerroin = Math.min(wid/(maxx-minx),hei/(maxy-miny))*0.9f;
-        //float kerroin = wid/(maxx-minx);
-        //System.out.println("Scale kerroin: " + kerroin + " wid: " + wid + " hei: " + hei);
+
         //shiftataan kaikki pisteet niin että panelin keskikohta on origo
         int ox = wid/2;
         int oy = hei/2;
