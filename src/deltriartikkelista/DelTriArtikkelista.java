@@ -134,7 +134,7 @@ public class DelTriArtikkelista {
         for(Piste p: kaikkiPFull)
         {
             float dis = (p.x-kccent[0])*(p.x-kccent[0]) + (p.y-kccent[1])*(p.y-kccent[1]);
-            if(dis <= kRad)
+            if(dis <= kRad && !p.equals(uusiKolmio) && !p.equals(kohde.a) && !p.equals(kohde.b))
             {
                 //piste oli cCirc ulkopuolella. Ei validi piste
                 isDel = false;
